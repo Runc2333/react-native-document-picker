@@ -156,7 +156,7 @@ public class RNDocumentPickerModule extends NativeDocumentPickerSpec {
   }
 
   @ReactMethod
-  public void pickDirectory(Promise promise) {
+  public void pickDirectory(String initialUriString, Promise promise) {
     Activity currentActivity = getCurrentActivity();
 
     if (currentActivity == null) {
@@ -166,7 +166,14 @@ public class RNDocumentPickerModule extends NativeDocumentPickerSpec {
     this.promise = promise;
     try {
       Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-      currentActivity.startActivityForResult(intent, PICK_DIR_REQUEST_CODE, null);
+
+      // Set the initial URI if it's provided
+      if (initialUriString != null && !initialUriString.isEmpty()) {
+          Uri initialUri = Uri.parse(initialUriString);
+          intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, initialUri);
+      }
+
+      currentActivity.startActivityForResult(intent, PICK_DIR_REQUEST_CODE);
     } catch (Exception e) {
       sendError(E_FAILED_TO_SHOW_PICKER, "Failed to create directory picker", e);
     }

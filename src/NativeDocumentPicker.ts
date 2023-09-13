@@ -14,6 +14,10 @@ export type DirectoryPickerResponse = {
   uri: string
 }
 
+export interface DirectoryPickerOptions {
+  initialUri?: string
+}
+
 export interface Spec extends TurboModule {
   readonly getConstants: () => {}
 
@@ -21,7 +25,7 @@ export interface Spec extends TurboModule {
   // present methods on iOS, which use NSDictionary
   pick(options: Object): Promise<DocumentPickerResponse[]>
   releaseSecureAccess(uris: string[]): Promise<void>
-  pickDirectory(): Promise<DirectoryPickerResponse>
+  pickDirectory(options?: DirectoryPickerOptions): Promise<DirectoryPickerResponse>
 }
 
 export const NativeDocumentPicker = TurboModuleRegistry.getEnforcing<Spec>('RNDocumentPicker')
