@@ -34,9 +34,7 @@ export type DocumentPickerOptions<OS extends SupportedPlatforms> = {
 } & Pick<ModalPropsIOS, 'presentationStyle'>
 
 export async function pickDirectory<OS extends SupportedPlatforms>(
-  params?: Pick<DocumentPickerOptions<OS>, 'presentationStyle' | 'transitionStyle'> & {
-    initialUri?: string
-  },
+  params?: Pick<DocumentPickerOptions<OS>, 'presentationStyle' | 'transitionStyle' | 'initialUri'>,
 ): Promise<DirectoryPickerResponse | null> {
   if (Platform.OS === 'ios') {
     const result = await pick({
