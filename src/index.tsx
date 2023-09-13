@@ -30,6 +30,7 @@ export type DocumentPickerOptions<OS extends SupportedPlatforms> = {
   copyTo?: 'cachesDirectory' | 'documentDirectory'
   allowMultiSelection?: boolean
   transitionStyle?: TransitionStyle
+  initialUri?: string
 } & Pick<ModalPropsIOS, 'presentationStyle'>
 
 export async function pickDirectory<OS extends SupportedPlatforms>(
@@ -46,7 +47,7 @@ export async function pickDirectory<OS extends SupportedPlatforms>(
     })
     return { uri: result[0].uri }
   } else {
-    return NativeDocumentPicker.pickDirectory(params)
+    return NativeDocumentPicker.pickDirectory(params?.initialUri)
   }
 }
 
